@@ -9,7 +9,7 @@
 from scrapy.exceptions import DropItem
 
 from qichacha.model import QccModel, get_sqlsession, engine, create_newtable
-
+from .mongodb import MongoHandler
 
 class QichachaPipeline(object):
     def __init__(self):
@@ -27,3 +27,13 @@ class QichachaPipeline(object):
 
 
 
+class QichachaPipelineMongo(object):
+    def __init__(self):
+        self.mongo = MongoHandler(conn_uri='localhost', db='spider', collection_name='qichacha')
+
+    def close_spider(self, spider):
+        self.mongo.close()
+
+    def process_item(self, item, spider):
+        self.mongo.run(item)
+        return item

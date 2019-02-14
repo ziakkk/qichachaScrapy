@@ -72,12 +72,12 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 20
+AUTOTHROTTLE_START_DELAY = 35
 # The maximum download delay to be set in case of high latencies
-AUTOTHROTTLE_MAX_DELAY = 120
+AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-AUTOTHROTTLE_TARGET_CONCURRENCY = 0.5
+AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 # Enable showing throttling stats for every response received:
 AUTOTHROTTLE_DEBUG = False
 
@@ -91,37 +91,37 @@ AUTOTHROTTLE_DEBUG = False
 
 
 
-#scrapy-redis
+######## scrapy-redis 配置
 # SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
 # DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
 
 # 使用第三方bloom过滤包: pip install scrapy-redis-bloomfilter
 SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
-# 散列个数，默认6
+
 BLOOMFILTER_HASH_NUMBER = 6
-# bloom filter bit参数，默认max30
 BLOOMFILTER_BIT = 30
 
-# SCHEDULER_QUEUE_CLASS ='scrapy_redis.queue.PriorityQueue' # FifoQueue LifoQueue
+
 SCHEDULER_PERSIST = True
-SCHEDULER_FLUSH_ON_START = True
 
 
-# redis
+SCHEDULER_FLUSH_ON_START = True    # del redis:dupefilter key
+
+
+
 REDIS_HOST = '127.0.0.1'
 REDIS_PORT = 6379
 #REDIS_PASSWORD=''
 
+REDIS_START_URLS_AS_SET = True
 
-# selenium
+
 CHROME_DRIVER =r'D:/develop/seleniumDrivers/chromedriver.exe'
 
 
 
-# 允许错误状态
+
 #HTTPERROR_ALLOWED_CODES = [405]
 
 
-# redis  sadd()方式
-REDIS_START_URLS_AS_SET = True

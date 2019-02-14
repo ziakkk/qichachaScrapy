@@ -23,13 +23,10 @@ db_name = 'spider'
 
 HOST = 'localhost'
 
-
-table_qcc = 'qichacha'
-
 engine = create_engine(
     'mysql+pymysql://root:2456056533@{host}:3306/{db_name}?charset=utf8'.format(host=HOST, db_name=db_name), echo=False)
 
-
+table_qcc = 'qichacha'
 
 
 def create_newtable(engine):
@@ -78,6 +75,8 @@ class BaseModel(Base):
                 session.rollback()
 
 
+            # with auto_commit(session):
+            #     session.add(model)
 
     @staticmethod
     @contextmanager
@@ -91,12 +90,16 @@ class BaseModel(Base):
     @staticmethod
     def db_distinct(session, dbmodel, item, keywords):
         '''
-        Db 通过url去重,可选
+        Db 通过url去重
         '''
+
+        # sql = 'SELECT url from {db_name}.{table_name} WHERE url ="{keyword}" limit 1'.format(db_name=db_name,table_name=table_name,keyword=keyword)
+        # result = session.execute(sql).fetchall()
+
         result = session.query(dbmodel).filter_by(url=keywords).first()
         if result:
-            raise DropItem('丢弃DB已存在的item:\n')
-            # pass
+            raise DropItem('丢弃DB已存在的item:\n')  # DropItem 丢弃
+            # pass     # 在close_spider()方法里面调用 DropItem 会报一个异常： ERROR: Scraper close failure,  所以直接pass也行
         else:
             return item
 

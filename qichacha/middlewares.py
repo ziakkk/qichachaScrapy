@@ -25,6 +25,7 @@ class QccUrlAgentDownloaderMiddleware:
     def process_request(self, request, spider):
         agent = random.choice(AGENTS_ALL)
         request.headers['User-Agent'] = agent
+        # request.cookies = cookies_json
 
 
 class QccSeleniumDownloaderMiddleware:
@@ -58,6 +59,9 @@ class QccSeleniumDownloaderMiddleware:
     def process_request(self, request, spider):
         """
         用Chrome抓取页面
+        :param request: Request对象
+        :param spider: Spider对象
+        :return: HtmlResponse
         """
         try:
 
@@ -66,11 +70,10 @@ class QccSeleniumDownloaderMiddleware:
             self.move_gap(td_id,263)
             code = self.browser.find_element_by_xpath('//div[@id="nc_1_scale_text"]/i').text   # 码
             code_image = self.browser.find_element_by_xpath('')  # 图片
-            img = code_image.get_attribute('src')   # 验证码
+            img = code_image.get_attribute('src')
             if img:
-                # 打码平台: 没钱-嘤嘤嘤
+                # 打码平台: 传code 和 md5后的img - pass
                 raise ('*************打码平台************')
-
 
             page_source = self.browser.page_source
 
@@ -83,6 +86,8 @@ class QccSeleniumDownloaderMiddleware:
     def except_request(self, request):
         '''
         请求失败
+        :param request: 
+        :return: 
         '''
         print('err requseet:', request.url)
         return request

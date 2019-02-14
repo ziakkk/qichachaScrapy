@@ -29,7 +29,7 @@ class QccurlSpider(scrapy.Spider):
                        '软装酒店用品', '软装花器', '软装窗帘', '软装床品', '软装抱枕靠垫', '软装墙布墙纸', '软装地毯', '软装餐布', '软装布艺', '软装花植花器', '软装鲜花绿植',
                        '软装仿真干花']
 
-        page_num = 11  # 11                   # 普通会员限制10页
+        page_num = 2  # 11                   # 普通会员限制10页
         self.cookies = string_to_dict()
         for i in search_keys:
             for j in range(1, page_num):
@@ -59,7 +59,7 @@ class QccurlSpider(scrapy.Spider):
 
     def url_parse(self, response):
 
-        # if 'www.qichacha.com/index_verify?' in response.text:  # 滑块验证码认证-待解决
+        # if 'www.qichacha.com/index_verify?' in response.text:  # 滑块认证-pass
         #     auth_url = response.text.split("'")[1]            # https://www.qichacha.com/index_verify?type=companysearch&back=/search?key=%E8%BD%AF%E8%A3%85&p=1&
         #     yield scrapy.Request(auth_url,callback=self.url_parse,cookies=self.cookies)
 
@@ -72,19 +72,12 @@ class QccurlSpider(scrapy.Spider):
             url = self.base_url + u
 
             if url:
-
                 # count = self.redis.lpush(self.redis_key,url)
                 count = self.redis.sadd(self.redis_key,url)
 
-        print(count)
 
-
-
-def string_to_dict():
-    '''
-    # 登录态,过期时间
-    :return:
-    '''
+# 登录态
+def string_to_dict():  # for cookies
     cookies ='acw_tc=779346d015359394441466828eddee14c862246dfa92e041a616a00271; _uab_collina=153593944631127383459377; UM_distinctid=1659d20071c538-09b0b929bcb25-9393265-1fa400-1659d20071d3d7; zg_did=%7B%22did%22%3A%20%221659d200731a0-0815d9f37b256-9393265-1fa400-1659d2007321c3%22%7D; PHPSESSID=4tlvnucmd0ontn3eqr0voc1jt0; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1535939447,1535979767,1536024189; _umdata=ED82BDCEC1AA6EB9842C48468AD1AD91A9B62757D7DF25F691CBE61689095C140010DCEE878730D8CD43AD3E795C914C2486DBB377653218905E1F6014EEB501; CNZZDATA1254842228=1661324530-1535934951-https%253A%252F%252Fwww.qichacha.com%252F%7C1536025315; hasShow=1; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201536024188138%2C%22updated%22%3A%201536029149112%2C%22info%22%3A%201535939446587%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22www.qichacha.com%22%2C%22cuid%22%3A%20%22265d30ecc365058984801223ceaf0330%22%7D; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1536029149'
     item_dict = {}
     items = cookies.split(';')

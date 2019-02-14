@@ -2,8 +2,11 @@
 import scrapy
 
 from redis import Redis
-from scrapy_redis.spiders import RedisSpider
-from scrapy_redis.utils import bytes_to_str
+# from scrapy_redis.spiders import RedisSpider
+# from scrapy_redis.utils import bytes_to_str
+
+from scrapy_redis_bloomfilter.spiders import RedisSpider
+from scrapy_redis_bloomfilter.utils import bytes_to_str
 
 from qichacha.spiders.qccUrl import string_to_dict  # cookies
 
@@ -34,6 +37,20 @@ class QccdetailSpider(RedisSpider):
 
         self.cookies = string_to_dict()
         return scrapy.Request(url,callback=self.detail_parse, cookies=self.cookies, dont_filter=True)
+
+    # 对比直接使用 Redis
+    # def start_requests(self):
+    #     self.cookies = string_to_dict()
+    #     self.redis = Redis(host='10.0.0.146')
+    #     while True:
+    #         url = self.redis.lpop(self.redis_key)
+    #         if not url:
+    #             print('redis url 为空')
+    #             break
+    #         yield scrapy.Request(url.decode(), callback=self.detail_parse, cookies=cookies)
+    #
+    #         # url = 'https://www.qichacha.com/firm_91253782d4f5a5f0afa82554fc94c8a0.html'
+    #         # yield scrapy.Request(url, callback=self.detail_parse, cookies=cookies)
 
     def detail_parse(self, response):
         item = QichachaItem()
@@ -92,7 +109,7 @@ class QccdetailSpider(RedisSpider):
 
         return item
 
-    # 清洗数据
+
     def clear_data(self, data):
         if data:
             data = data.replace('\n', '').split(' ')
