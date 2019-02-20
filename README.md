@@ -35,3 +35,8 @@
 #### 使用说明
 1、纯脚本运行：Python run.py  
 2、gerapy 爬虫管理平台： 部署、启动停止删除爬虫 -略  
+
+#### gerapy管理平台
+![qcc_gerapy_1](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_gerapy_1.png)
+![qcc_gerapy_2](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_gerapy_2.png)
+![qcc_gerapy_3](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_gerapy_3.png)
