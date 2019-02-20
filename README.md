@@ -1,7 +1,19 @@
 # qichachaScrapy
 
 #### 项目介绍
-企查查 供应商信息采集  
+企查查( https://www.qichacha.com ) 供应商信息采集  
+
+#### 界面预览
+![qcc_list](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_list.png)
+![qcc_info_title](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_info_title.png)
+![qcc_info_detail](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_info_detail.png)
+
+#### 执行过程
+![qcc_run](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_run.png)
+![qcc_run2](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_run2.png)
+
+#### 执行结果
+![qcc_data](https://github.com/TonyK-T/github_images/blob/master/tycAndQcc/qcc_data.png)
 
 #### 软件架构
 软件架构说明  
@@ -14,7 +26,7 @@
 7、gerapy 爬虫管理平台  
 
 #### 安装教程
-安装Python库  
+安装Python库[Scrapy,scrapy-redis-bloomfilter,scrapyd ,scrapyd-client,Redis,sqlalchemy,motor]等等  
 安装redis  
 安装chrome  
 安装mysql，mongodb  
