@@ -14,7 +14,7 @@ class QccurlSpider(scrapy.Spider):
     cookies={}
 
     custom_settings = {'DOWNLOADER_MIDDLEWARES':{'qichacha.middlewares.QccUrlAgentDownloaderMiddleware': 543,},   # 用它需要设置延迟请求20+秒一次
-                       #'DOWNLOADER_MIDDLEWARES':{'qichacha.middlewares.QccSeleniumDownloaderMiddleware': 543,}   # 用它需解决图片验证码问题-待解决
+                       #'DOWNLOADER_MIDDLEWARES':{'qichacha.middlewares.QccSeleniumDownloaderMiddleware': 543,}   # 用它需解决图片验证码问题
                        }
 
     redis_key = 'qcc:request'
@@ -25,10 +25,11 @@ class QccurlSpider(scrapy.Spider):
         模糊搜索
         :return:
         '''
-        search_keys = ['软装', '家具', '民用家具', '酒店家具', '办公家具', '户外家具', '软装饰品', '软装灯饰', '软装墙饰', '软装吊饰', '软装画艺', '软装雕塑',
-                       '软装酒店用品', '软装花器', '软装窗帘', '软装床品', '软装抱枕靠垫', '软装墙布墙纸', '软装地毯', '软装餐布', '软装布艺', '软装花植花器', '软装鲜花绿植',
-                       '软装仿真干花']
+        # search_keys = ['软装', '家具', '民用家具', '酒店家具', '办公家具', '户外家具', '软装饰品', '软装灯饰', '软装墙饰', '软装吊饰', '软装画艺', '软装雕塑',
+        #                '软装酒店用品', '软装花器', '软装窗帘', '软装床品', '软装抱枕靠垫', '软装墙布墙纸', '软装地毯', '软装餐布', '软装布艺', '软装花植花器', '软装鲜花绿植',
+        #                '软装仿真干花']
 
+        search_keys = ['家具',]
         page_num = 2  # 11                   # 普通会员限制10页
         self.cookies = string_to_dict()
         for i in search_keys:
@@ -68,7 +69,7 @@ class QccurlSpider(scrapy.Spider):
         if not trs:
             trs = response.xpath('//section[@id="searchlist"]/table/tr')
         for tr in trs:
-            u = tr.xpath('td[2]/a/@href').extract_first()
+            u = tr.xpath('td[3]/a/@href').extract_first()
             url = self.base_url + u
 
             if url:
@@ -78,7 +79,7 @@ class QccurlSpider(scrapy.Spider):
 
 # 登录态
 def string_to_dict():  # for cookies
-    cookies ='acw_tc=779346d015359394441466828eddee14c862246dfa92e041a616a00271; _uab_collina=153593944631127383459377; UM_distinctid=1659d20071c538-09b0b929bcb25-9393265-1fa400-1659d20071d3d7; zg_did=%7B%22did%22%3A%20%221659d200731a0-0815d9f37b256-9393265-1fa400-1659d2007321c3%22%7D; PHPSESSID=4tlvnucmd0ontn3eqr0voc1jt0; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1535939447,1535979767,1536024189; _umdata=ED82BDCEC1AA6EB9842C48468AD1AD91A9B62757D7DF25F691CBE61689095C140010DCEE878730D8CD43AD3E795C914C2486DBB377653218905E1F6014EEB501; CNZZDATA1254842228=1661324530-1535934951-https%253A%252F%252Fwww.qichacha.com%252F%7C1536025315; hasShow=1; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201536024188138%2C%22updated%22%3A%201536029149112%2C%22info%22%3A%201535939446587%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22www.qichacha.com%22%2C%22cuid%22%3A%20%22265d30ecc365058984801223ceaf0330%22%7D; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1536029149'
+    cookies ='QCCSESSID=tjl02vg0gref2sh7qdgo7d5tv1; UM_distinctid=16908a4761f6d6-006afca38281ca-b781636-1fa400-16908a47620171; CNZZDATA1254842228=607620362-1550623808-https%253A%252F%252Fwww.baidu.com%252F%7C1550623808; zg_did=%7B%22did%22%3A%20%2216908a47b97321-0eb46a2d70dfe4-b781636-1fa400-16908a47b983de%22%7D; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1550628191; hasShow=1; _uab_collina=155062819187986042757468; acw_tc=0e77721515506281902036981e0cee085aaf3bc2ad03ce07fdbeb4f943; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1550628264; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201550628191131%2C%22updated%22%3A%201550628274118%2C%22info%22%3A%201550628191135%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22www.baidu.com%22%2C%22cuid%22%3A%20%22265d30ecc365058984801223ceaf0330%22%7D'
     item_dict = {}
     items = cookies.split(';')
     for item in items:
@@ -88,3 +89,12 @@ def string_to_dict():  # for cookies
 
     return item_dict
 
+
+if __name__ == '__main__':
+    from scrapy.crawler import CrawlerProcess
+    from scrapy.utils.project import get_project_settings
+
+    # process = CrawlerProcess({'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'})
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(QccurlSpider)
+    process.start()

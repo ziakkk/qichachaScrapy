@@ -11,7 +11,7 @@ import asyncio
 import json
 from motor.motor_asyncio import AsyncIOMotorClient
 from scrapy import Item
-from commentsScrapy.logging.log import logger
+import logging
 
 class MongoHandler:
     def __init__(self, conn_uri=None, db='spider', collection_name='default'):
@@ -41,11 +41,11 @@ class MongoHandler:
 
         if not re_data:
             if await self.collection.insert_one(item_data):
-                logger.info('*******save to mongodb success')
+                logging.info('*******save to mongodb success')
             else:
                 raise ('*******save to mongodb fail')
         else:
-            logger.info('********* repeat item')
+            logging.info('********* repeat item')
 
     def run(self, item):
         # asyncio.set_event_loop(self.loop)

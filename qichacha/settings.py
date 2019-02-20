@@ -106,7 +106,7 @@ BLOOMFILTER_BIT = 30
 SCHEDULER_PERSIST = True
 
 
-SCHEDULER_FLUSH_ON_START = True    # del redis:dupefilter key
+SCHEDULER_FLUSH_ON_START = False    # del redis:dupefilter key
 
 
 
