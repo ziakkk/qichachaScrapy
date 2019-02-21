@@ -30,7 +30,10 @@
 安装redis  
 安装chrome  
 安装mysql，mongodb  
-搭建gerapy环境  
+搭建gerapy环境 - 略  
+
+#### 懒人专享 一键docker
+安装使用说明后续补上  
 
 #### 使用说明
 1、纯脚本运行：Python run.py  
