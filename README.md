@@ -33,8 +33,21 @@
 搭建gerapy环境 - 略  
 
 #### 懒人专享 一键docker
-安装使用说明后续补上  
+1、安装docker-略  
+2、下载docker镜像：https://pan.baidu.com/s/1JU9xqbsDkYh-3ehhiuK1Jg  
+3、加载镜像(耗时)：docker load -i  centos7:python3.tar    
+4、创建并运行容器：docker  run -itd -p 8002:8001 -p 6802:6800  --privileged=true  centos7:python3  /usr/sbin/init  
+5、访问gerapy管理部署爬虫： http://IP:8002/    
 
+如果访问 http://IP:8002/ 报500，解决方式如下：  
+  1.查看容器的CID：docker ps -a  
+  2.进入容器命令行： docker exec -it  容器CID /bin/bash  
+  3.容器命令行里重启gerapy服务：  
+      ps -ef|grep gerapy   
+      kill -9 gerapy进程ID  
+      /gerapy/gerapy_start.sh    # 重启gerapy脚本    
+ ![docker_python3](https://github.com/TonyK-T/github_images/blob/master/docker/docker_Python3.png)
+ 
 #### 使用说明
 1、纯脚本运行：Python run.py  
 2、gerapy 爬虫管理平台： 部署、启动停止删除爬虫 -略  
